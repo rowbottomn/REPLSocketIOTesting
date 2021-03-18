@@ -3,8 +3,16 @@ var app = require('express')();
 var http = require('http').Server(app);
 let io = require('socket.io')(http);
 
+//a user list
+let users = [];
+
+
 app.get('/', function(req, res){
+  //https://stackoverflow.com/questions/16333790/node-js-quick-file-server-static-files-over-http/29046869#29046869
+  //res.sendFile(__dirname + '/script.js');
+  //res.sendFile(__dirname + '/style.css');
   res.sendFile(__dirname + '/index.html');
+
 });
 
 io.on('connection', function(socket){
@@ -18,6 +26,7 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', function(){
     console.log('A user disconnected');
+    //remove their id from the users
   });
 });
 
